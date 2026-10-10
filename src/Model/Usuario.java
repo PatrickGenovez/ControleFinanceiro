@@ -1,19 +1,33 @@
 package Model;
 
-public class usuario {
+public class Usuario {
     private int id;
     private String name;
     private int age;
     private String email;
-    private String cpf;
+    private int cpf;
 
-    public usuario(String name, int age, String email, String cpf) {
+    // Construtores
+
+
+    public Usuario() {
+    }
+
+    public Usuario(String name, int age, String email, int cpf) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.cpf = cpf;
     }
 
+    // Métodos
+    public void cadastrar(){
+        if(!this.email.contains("@")){
+            System.out.println("Inválido");
+        }
+    }
+
+    // Getters e Setterss
     public int getId() {
         return id;
     }
@@ -46,11 +60,11 @@ public class usuario {
         this.email = email;
     }
 
-    public String getCpf() {
+    public int getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(int cpf) {
         this.cpf = cpf;
     }
 }
