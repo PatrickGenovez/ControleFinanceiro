@@ -21,9 +21,19 @@ public class Usuario {
 
     // Métodos
     public void cadastrar() {
-        if (!this.email.contains("@")) {
-            System.out.println("Inválido");
-        }
+
+    }
+
+    public void listarUsuarios() {
+        System.out.println("Id: " + getId());
+        System.out.println("Nome: " + getName());
+        System.out.println("Idade: " + getAge());
+        System.out.println("Email: " + getEmail());
+        System.out.println("CPF: " + getCpf());
+    }
+
+    public void contarUsuario(int cont){
+
     }
 
     // Getters e Setterss

@@ -16,9 +16,10 @@ public class Main {
         do {
             System.out.println("====== Controle Financeiro ======");
             System.out.println("[ 1 ] - Cadastrar Usuário");
-            System.out.println("[ 2 ] - Remover usuário");
-            System.out.println("[ 3 ] - Listar Usuários");
-            System.out.println("[ 3 ] - Adicionar dispesa");
+            System.out.println("[ 2 ] - Listar Usuários");
+            System.out.println("[ 3 ] - Remover Usuários");
+            System.out.println("[ 4 ] - Adicionar dispesa");
+            System.out.println("[ 0 ] - Sair");
             System.out.print("Escolha a operação: ");
             operacao = scan.nextInt();
             scan.nextLine();
@@ -41,21 +42,41 @@ public class Main {
                     Usuario novoUsuario = new Usuario(nome, idade, email, cpf);
                     listaUsuarios.add(novoUsuario);
 
+                    int cont = listaUsuarios.size();
+                    novoUsuario.setId(cont);
+
                     System.out.println("Usuário cadastrado!");
 
                     break;
 
                 case 2:
-                    System.out.println("Digite o CPF do usuário que deseja remover: ");
-                    int removerUsuario = scan.nextInt();
-                    scan.nextLine();
+                    System.out.println("Listando...");
+                    for (Usuario u : listaUsuarios){
+                        u.listarUsuarios();
+                        System.out.println("----------");
+                    }
+
+                    break;
+                case 3:
+                    System.out.println("Removendo...");
 
                     break;
 
+                case 4:
+                    System.out.println("Safado");
+                    break;
+
+                case 0:
+                    System.out.println("Fechando programa!!!");
+                    break;
+
+                default:
+                    System.out.println("Tente novamente!");
             }
 
         } while (operacao != 0);
         {
+            System.out.println("Programa finalizado!!!");
 
         }
     }
