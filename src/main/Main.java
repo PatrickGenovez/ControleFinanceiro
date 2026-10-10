@@ -36,8 +36,7 @@ public class Main {
                     String email = scan.nextLine();
 
                     System.out.print("CPF: ");
-                    int cpf = scan.nextInt();
-                    scan.nextLine();
+                    String cpf = scan.nextLine();
 
                     Usuario novoUsuario = new Usuario(nome, idade, email, cpf);
                     listaUsuarios.add(novoUsuario);

@@ -5,15 +5,14 @@ public class Usuario {
     private String name;
     private int age;
     private String email;
-    private int cpf;
+    private String cpf;
 
     // Construtores
-
 
     public Usuario() {
     }
 
-    public Usuario(String name, int age, String email, int cpf) {
+    public Usuario(String name, int age, String email, String cpf) {
         this.name = name;
         this.age = age;
         this.email = email;
@@ -21,8 +20,8 @@ public class Usuario {
     }
 
     // Métodos
-    public void cadastrar(){
-        if(!this.email.contains("@")){
+    public void cadastrar() {
+        if (!this.email.contains("@")) {
             System.out.println("Inválido");
         }
     }
@@ -60,11 +59,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 }
