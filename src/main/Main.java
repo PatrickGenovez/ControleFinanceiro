@@ -2,7 +2,7 @@ package main;
 
 import Model.Menu;
 import Model.Usuario;
-
+import repository.UsuarioRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,8 +11,7 @@ public class Main {
     static void main() {
         Scanner scan = new Scanner(System.in);
         Menu menu = new Menu();
-        List<Usuario> listaUsuarios = new ArrayList<>();
-
+        UsuarioRepository usuarioRepository = new UsuarioRepository();
         int operacao;
 
         do {
@@ -36,10 +35,8 @@ public class Main {
                     String cpf = scan.nextLine();
 
                     Usuario novoUsuario = new Usuario(nome, idade, email, cpf);
-                    listaUsuarios.add(novoUsuario);
+                    usuarioRepository.salvarUsuario(novoUsuario);
 
-                    int cont = listaUsuarios.size();
-                    novoUsuario.setId(cont);
 
                     System.out.println("Usuário cadastrado!");
 
@@ -47,9 +44,9 @@ public class Main {
 
                 case 2:
                     System.out.println("Listando...");
-                    for (Usuario u : listaUsuarios){
+                    for(Usuario u : usuarioRepository.listarUsuarios()){
                         u.listarUsuarios();
-                        System.out.println("----------");
+                        System.out.println("---------------");
                     }
 
                     break;
@@ -57,18 +54,12 @@ public class Main {
                     System.out.println("Digite seu CPF: ");
                     String cpfLogin = scan.nextLine();
 
-                    Usuario usuarioLogado = null;
+                    Usuario usuarioLogado = usuarioRepository.buscarPorCpf(cpfLogin);
 
-                    for(Usuario u : listaUsuarios){
-                        if(cpfLogin.equals(u.getCpf())){
-                            usuarioLogado = u;
-                            System.out.println("Usuário logado!");
-                            break;
-                        }
-                    }
-                    if(usuarioLogado == null){
-                        System.out.println("Usuário não encontrado!");
-                    } else {
+                    if (usuarioLogado == null){
+                        System.out.println("Impossível fazer login, se cadastre!");
+                    } else { 
+                        System.out.println("Usuário logado!");
                         menu.menuDaConta(usuarioLogado, scan);
                     }
                     break;               
