@@ -6,6 +6,7 @@ public class Usuario {
     private int age;
     private String email;
     private String cpf;
+    private Conta conta;
 
     // Construtores
 
@@ -27,10 +28,6 @@ public class Usuario {
         System.out.println("Idade: " + getAge());
         System.out.println("Email: " + getEmail());
         System.out.println("CPF: " + getCpf());
-    }
-
-    public void contarUsuario(int cont){
-
     }
 
     // Getters e Setterss
@@ -73,4 +70,13 @@ public class Usuario {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+    
 }

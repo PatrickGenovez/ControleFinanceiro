@@ -25,11 +25,22 @@ public class Menu {
         int operacaoConta = scan.nextInt();
         scan.nextLine();
 
-        switch (operacaoConta)) {
-            case value:
-                
+        switch (operacaoConta) {
+            case 1:
+                System.out.println("===============");
+                System.out.println("Saldo atual: R$" + usuarioLogado.getConta().getSaldo());
                 break;
-        
+
+            case 2:
+                System.out.println("===============");
+                System.out.println("Adicionar valor: ");
+                double receitaAdd = scan.nextDouble();
+                scan.nextLine();
+
+                usuarioLogado.getConta().setSaldo(receitaAdd);
+                System.out.println("Receita Cadastrada!");
+                break;
+
             default:
                 break;
         }
