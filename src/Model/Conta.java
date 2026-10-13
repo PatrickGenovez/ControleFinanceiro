@@ -1,8 +1,10 @@
 package Model;
 
+import java.math.BigDecimal;
+
 public class Conta {
     private int numeroConta;
-    private double saldo;
+    private BigDecimal saldo;
     private Usuario titular;
 
     // Construtores
@@ -12,7 +14,7 @@ public class Conta {
 
     public Conta(int numeroConta, Usuario titular) {
         this.numeroConta = numeroConta;
-        this.saldo = 0.0;
+        this.saldo = BigDecimal.ZERO;
         this.titular = titular;
     }
 
@@ -26,11 +28,11 @@ public class Conta {
         this.numeroConta = numeroConta;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 

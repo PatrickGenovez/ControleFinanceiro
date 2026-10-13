@@ -1,10 +1,13 @@
 package Model;
 
 import java.util.Scanner;
+import java.math.BigDecimal;
 
 public class Menu {
     Scanner scan = new Scanner(System.in);
     
+
+    // Menu principal
     public void menuPrincipal(){
         System.out.println("====== Controle Financeiro ======");
         System.out.println("[ 1 ] - Cadastrar Usuário");
@@ -12,8 +15,12 @@ public class Menu {
         System.out.println("[ 3 ] - Fazer login");
         System.out.println("[ 0 ] - Sair");
         System.out.print("Escolha a operação: ");
+
+
     }
     
+
+    // Menu Da Conta
     public void menuDaConta(Usuario usuarioLogado, Scanner scan){
         System.out.println("===============");
         System.out.println("Bem-Vindo(a), "+ usuarioLogado.getName()+"!");
@@ -33,15 +40,37 @@ public class Menu {
 
             case 2:
                 System.out.println("===============");
-                System.out.println("Adicionar valor: ");
-                double receitaAdd = scan.nextDouble();
+                System.out.println("Valor da Receita: ");
+                BigDecimal receitaAdd = scan.nextBigDecimal();
                 scan.nextLine();
 
-                usuarioLogado.getConta().setSaldo(receitaAdd);
+                // Aqui ele vai somar o saldo atual com a receita adicionada
+                BigDecimal res = usuarioLogado.getConta().getSaldo().add(receitaAdd);
+                usuarioLogado.getConta().setSaldo(res);
+
+
                 System.out.println("Receita Cadastrada!");
                 break;
 
+
+            case 3:
+                System.out.println("===============");
+                System.out.println("Valor da despesa: ");
+                BigDecimal despesaAdd = scan.nextBigDecimal();
+                scan.nextLine();
+                
+                // Aqui ele vai subtrair o saldo atual com a despesa adicionada
+                BigDecimal res = usuarioLogado.getConta().getSaldo().subtract(despesaAdd);
+                usuarioLogado.getConta().setSaldo(res);
+            
+                System.out.println("Despesa Cadastrada!");
+                break;
+                
+            case 0:
+                System.out.println("Voltando...");
+                break;
             default:
+                System.out.println("Valor incorreto,, tente novamente!");
                 break;
         }
     }    
