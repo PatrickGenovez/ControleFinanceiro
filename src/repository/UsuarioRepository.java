@@ -20,10 +20,7 @@ public class UsuarioRepository {
         for(Usuario u : listaUsuarios){
             if(u.getCpf().equals(cpf)){
                 return u;
-            } else {
-                System.out.println("não encontrado!");
             }
-        
         }
         return null;
     }
