@@ -1,5 +1,6 @@
 package main;
 
+import Model.Menu;
 import Model.Usuario;
 
 import java.util.ArrayList;
@@ -9,18 +10,13 @@ import java.util.Scanner;
 public class Main {
     static void main() {
         Scanner scan = new Scanner(System.in);
+        Menu menu = new Menu();
         List<Usuario> listaUsuarios = new ArrayList<>();
 
         int operacao;
 
         do {
-            System.out.println("====== Controle Financeiro ======");
-            System.out.println("[ 1 ] - Cadastrar Usuário");
-            System.out.println("[ 2 ] - Listar Usuários");
-            System.out.println("[ 3 ] - Remover Usuários");
-            System.out.println("[ 4 ] - Adicionar dispesa");
-            System.out.println("[ 0 ] - Sair");
-            System.out.print("Escolha a operação: ");
+            menu.menuPrincipal();
             operacao = scan.nextInt();
             scan.nextLine();
 
@@ -58,14 +54,25 @@ public class Main {
 
                     break;
                 case 3:
-                    System.out.println("Removendo...");
+                    System.out.println("Digite seu CPF: ");
+                    String cpfLogin = scan.nextLine();
 
-                    break;
+                    Usuario usuarioLogado = null;
 
-                case 4:
-                    System.out.println("Safado");
-                    break;
-
+                    for(Usuario u : listaUsuarios){
+                        if(cpfLogin.equals(u.getCpf())){
+                            usuarioLogado = u;
+                            System.out.println("Usuário logado!");
+                            break;
+                        }
+                    }
+                    if(usuarioLogado == null){
+                        System.out.println("Usuário não encontrado!");
+                    } else {
+                        menu.menuDaConta(usuarioLogado, scan);
+                    }
+                    break;               
+                
                 case 0:
                     System.out.println("Fechando programa!!!");
                     break;

@@ -20,9 +20,6 @@ public class Usuario {
     }
 
     // Métodos
-    public void cadastrar() {
-
-    }
 
     public void listarUsuarios() {
         System.out.println("Id: " + getId());
