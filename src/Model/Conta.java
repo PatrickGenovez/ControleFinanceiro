@@ -8,8 +8,8 @@ public class Conta {
     private Usuario titular;
 
     // Construtores
-    private Conta(){
-
+    public Conta(){
+        
     }
 
     public Conta(int numeroConta, Usuario titular) {

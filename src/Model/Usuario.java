@@ -21,7 +21,6 @@ public class Usuario {
     }
 
     // Métodos
-
     public void listarUsuarios() {
         System.out.println("Id: " + getId());
         System.out.println("Nome: " + getName());

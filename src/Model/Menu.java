@@ -3,10 +3,13 @@ package Model;
 import java.math.BigDecimal;
 import java.util.Scanner;
 import repository.UsuarioRepository;
+import service.ContaService;
+import service.UsuarioService;
 
 public class Menu {
     private Scanner scan = new Scanner(System.in);
-    private UsuarioRepository usuarioRepository = new UsuarioRepository();
+    private UsuarioService usuarioService = new UsuarioService();
+    private ContaService contaService = new ContaService();
 
     // Ponto de entrada do Menu (inicia todo o fluxo do sistema)
     public void iniciar() {
@@ -56,7 +59,7 @@ public class Menu {
 
     // Ações do Menu Principal
     private void cadastrarUsuario() {
-        System.out.println("\n--- Cadastro de Usuário ---");
+        System.out.println("\n=== Cadastro de Usuário ===");
         System.out.print("Nome: ");
         String nome = scan.nextLine();
 
@@ -71,27 +74,25 @@ public class Menu {
         String cpf = scan.nextLine();
 
         Usuario novoUsuario = new Usuario(nome, idade, email, cpf);
-        
-        // Cria a Conta e já vincula ao usuário
-        int numeroConta = usuarioRepository.listarUsuarios().size() + 1;
-        Conta novaConta = new Conta(numeroConta, novoUsuario);
-        novoUsuario.setConta(novaConta);
 
-        usuarioRepository.salvarUsuario(novoUsuario);
-        System.out.println("Usuário cadastrado com sucesso!");
+       boolean cadastrado = usuarioService.cadastrarUsuario(novoUsuario);
+
+        if (cadastrado) {
+            System.out.println("-------------------------------");
+            System.out.println("Usuário cadastrado com sucesso!");
+            System.out.println("-------------------------------");
+
+        } else {
+            System.out.println("-----------------------");
+            System.out.println("Usuário não cadastrado!");
+            System.out.println("-----------------------");
+        }
+
     }
 
     private void listarUsuarios() {
         System.out.println("\n--- Lista de Usuários ---");
-        if (usuarioRepository.listarUsuarios().isEmpty()) {
-            System.out.println("Nenhum usuário cadastrado.");
-            return;
-        }
-
-        for (Usuario u : usuarioRepository.listarUsuarios()) {
-            u.listarUsuarios();
-            System.out.println("-------------------------");
-        }
+        usuarioService.listarUsuarios();
     }
 
     private void fazerLogin() {
@@ -99,15 +100,16 @@ public class Menu {
         System.out.print("Digite seu CPF: ");
         String cpfLogin = scan.nextLine();
 
-        Usuario usuarioLogado = usuarioRepository.buscarPorCpf(cpfLogin);
-
+        Usuario usuarioLogado = usuarioService.fazerLogin(cpfLogin);
         if (usuarioLogado == null) {
-            System.out.println("Usuário não encontrado, se cadastre!");
+            System.out.println("Usuário não encontrado!");
         } else {
-            System.out.println("Usuário logado com sucesso!");
-            menuDaConta(usuarioLogado); // Abre o menu da conta daquele usuário
+            System.out.println("Login realizado com sucesso!");
+            menuDaConta(usuarioLogado);
         }
     }
+
+    // ------------------------------------------------------------------------------------------------------
 
     // Menu da Conta do Usuário Logado
     public void menuDaConta(Usuario usuarioLogado) {
@@ -128,20 +130,17 @@ public class Menu {
             switch (operacaoConta) {
                 case 1:
                     System.out.println("===============");
-                    System.out.println("Saldo atual: R$ " + usuarioLogado.getConta().getSaldo());
+                    System.out.println("Saldo atual: R$ " + contaService.consultarSaldo(usuarioLogado.getConta()));
                     break;
 
                 case 2:
                     System.out.println("===============");
                     System.out.print("Valor da Receita: ");
+
                     BigDecimal receitaAdd = scan.nextBigDecimal();
                     scan.nextLine();
 
-                    BigDecimal saldoAposReceita = usuarioLogado.getConta().getSaldo().add(receitaAdd);
-                    usuarioLogado.getConta().setSaldo(saldoAposReceita);
-
-                    System.out.println("Receita Cadastrada com sucesso!");
-                    System.out.println("Novo saldo: R$ " + saldoAposReceita);
+                    contaService.adicionarReceita(usuarioLogado.getConta(), receitaAdd);
                     break;
 
                 case 3:
@@ -152,15 +151,7 @@ public class Menu {
 
                     BigDecimal saldoAtual = usuarioLogado.getConta().getSaldo();
 
-                    // Verifica se tem saldo suficiente
-                    if (saldoAtual.compareTo(despesaAdd) >= 0) {
-                        BigDecimal saldoAposDespesa = saldoAtual.subtract(despesaAdd);
-                        usuarioLogado.getConta().setSaldo(saldoAposDespesa);
-                        System.out.println("Despesa Cadastrada com sucesso!");
-                        System.out.println("Novo saldo: R$ " + saldoAposDespesa);
-                    } else {
-                        System.out.println("Saldo insuficiente! Você possui apenas R$ " + saldoAtual);
-                    }
+                    contaService.adicionarDespesa(usuarioLogado.getConta(), despesaAdd);
                     break;
 
                 case 0:
