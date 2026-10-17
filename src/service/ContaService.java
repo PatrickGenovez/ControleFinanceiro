@@ -23,6 +23,7 @@ public class ContaService {
             // Calcula o novo saldo e atualiza a conta
 
             conta.setSaldo(conta.getSaldo().add(valor)); 
+            contaRepository.atualizarSaldo(conta); // Grava o novo saldo no MySQL!
             System.out.println("Receita adicionada com sucesso!");
 
             return true; // Deu certo
@@ -44,6 +45,7 @@ public class ContaService {
 
             if(conta.getSaldo().compareTo(valor) >= 0) {
                 conta.setSaldo(conta.getSaldo().subtract(valor));
+                contaRepository.atualizarSaldo(conta); // <-- Grava o novo saldo no MySQL!
                 System.out.println("Despesa adicionada com sucesso!");
                 return true;
             } else {
