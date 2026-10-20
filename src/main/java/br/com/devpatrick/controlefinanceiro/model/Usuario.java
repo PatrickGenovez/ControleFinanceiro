@@ -1,15 +1,30 @@
-package Model;
+package br.com.devpatrick.controlefinanceiro.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "nome", nullable = false)
     private String name;
+
+    @Column(name = "idade")
     private int age;
+
     private String email;
+
+    @Column(nullable = false, unique = true)
     private String cpf;
+
+    @OneToOne(mappedBy = "titular", cascade = CascadeType.ALL)
     private Conta conta;
 
     // Construtores
-
     public Usuario() {
     }
 
@@ -29,7 +44,7 @@ public class Usuario {
         System.out.println("CPF: " + getCpf());
     }
 
-    // Getters e Setterss
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -77,5 +92,9 @@ public class Usuario {
     public void setConta(Conta conta) {
         this.conta = conta;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Id: " + id + " | Nome: " + name + " | Idade: " + age + " | Email: " + email + " | CPF: " + cpf;
+    }
 }

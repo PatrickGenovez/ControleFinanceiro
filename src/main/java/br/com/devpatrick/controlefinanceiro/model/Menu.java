@@ -1,15 +1,22 @@
-package Model;
+package br.com.devpatrick.controlefinanceiro.model;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
-import repository.UsuarioRepository;
-import service.ContaService;
-import service.UsuarioService;
+import br.com.devpatrick.controlefinanceiro.service.ContaService;
+import br.com.devpatrick.controlefinanceiro.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Menu {
+
     private Scanner scan = new Scanner(System.in);
-    private UsuarioService usuarioService = new UsuarioService();
-    private ContaService contaService = new ContaService();
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private ContaService contaService;
 
     // Ponto de entrada do Menu (inicia todo o fluxo do sistema)
     public void iniciar() {
@@ -49,7 +56,7 @@ public class Menu {
 
     // Exibe as opções do Menu Principal
     public void menuPrincipal() {
-        System.out.println("====== Controle Financeiro ======");
+        System.out.println("\n====== Controle Financeiro ======");
         System.out.println("[ 1 ] - Cadastrar Usuário");
         System.out.println("[ 2 ] - Listar Usuários");
         System.out.println("[ 3 ] - Fazer Login");
@@ -75,19 +82,17 @@ public class Menu {
 
         Usuario novoUsuario = new Usuario(nome, idade, email, cpf);
 
-       boolean cadastrado = usuarioService.cadastrarUsuario(novoUsuario);
+        boolean cadastrado = usuarioService.cadastrarUsuario(novoUsuario);
 
         if (cadastrado) {
             System.out.println("-------------------------------");
             System.out.println("Usuário cadastrado com sucesso!");
             System.out.println("-------------------------------");
-
         } else {
             System.out.println("-----------------------");
-            System.out.println("Usuário não cadastrado!");
+            System.out.println("Usuário não cadastrado! (CPF já existente)");
             System.out.println("-----------------------");
         }
-
     }
 
     private void listarUsuarios() {
@@ -108,8 +113,6 @@ public class Menu {
             menuDaConta(usuarioLogado);
         }
     }
-
-    // ------------------------------------------------------------------------------------------------------
 
     // Menu da Conta do Usuário Logado
     public void menuDaConta(Usuario usuarioLogado) {
@@ -136,7 +139,6 @@ public class Menu {
                 case 2:
                     System.out.println("===============");
                     System.out.print("Valor da Receita: ");
-
                     BigDecimal receitaAdd = scan.nextBigDecimal();
                     scan.nextLine();
 
@@ -148,8 +150,6 @@ public class Menu {
                     System.out.print("Valor da Despesa: ");
                     BigDecimal despesaAdd = scan.nextBigDecimal();
                     scan.nextLine();
-
-                    BigDecimal saldoAtual = usuarioLogado.getConta().getSaldo();
 
                     contaService.adicionarDespesa(usuarioLogado.getConta(), despesaAdd);
                     break;
@@ -163,6 +163,6 @@ public class Menu {
                     break;
             }
 
-        } while (operacaoConta != 0); // Continua no menu da conta até o usuário digitar 0
+        } while (operacaoConta != 0);
     }
 }
