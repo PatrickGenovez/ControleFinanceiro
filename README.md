@@ -12,7 +12,8 @@ O projeto foi dividido em duas fases:
 - Validação de regras de negócio.
 
     Desenvolvimento com apoio de IA:
-Durante o desenvolvimento, utilizei uma IA como ferramenta de aprendizado. Eu escrevia o código e recorria a ela quando surgiam dúvidas, buscando entender os conceitos e as soluções aplicadas.
+Durante o desenvolvimento, utilizei uma IA como ferramenta de aprendizado. Eu escrevia o código e recorria a ela quando surgiam dúvidas, buscando entender os conceitos e as soluções aplicadas, também pedi a ia para gerar Logs
+para que eu pudesse me basear em ações já concluídas e poder ter uma melhor tomada de decisão.
 
 Tecnologias: Java 21 · Spring Boot 3 · Spring Data JPA · Hibernate · MySQL · Maven
 
