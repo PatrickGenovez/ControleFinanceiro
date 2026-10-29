@@ -66,7 +66,7 @@ public class Conta {
     @Override
     public String toString() {
         return "Conta Nº: " + numeroConta + 
-               "\nTitular: " + (titular != null ? titular.getName() : "Sem titular") + 
+               "\nTitular: " + (titular != null ? titular.getNome() : "Sem titular") + 
                "\nSaldo: " + String.format("R$ %.2f", saldo);
     }    
 }

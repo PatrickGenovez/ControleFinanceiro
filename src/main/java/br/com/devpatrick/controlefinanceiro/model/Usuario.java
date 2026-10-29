@@ -10,12 +10,12 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "nome", nullable = false)
-    private String name;
+    @Column(nullable = false)
+    private String nome;
 
-    @Column(name = "idade")
-    private int age;
+    private int idade;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, unique = true)
@@ -28,9 +28,9 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String name, int age, String email, String cpf) {
-        this.name = name;
-        this.age = age;
+    public Usuario(String nome, int idade, String email, String cpf) {
+        this.nome = nome;
+        this.idade = idade;
         this.email = email;
         this.cpf = cpf;
     }
@@ -38,8 +38,8 @@ public class Usuario {
     // Métodos
     public void listarUsuarios() {
         System.out.println("Id: " + getId());
-        System.out.println("Nome: " + getName());
-        System.out.println("Idade: " + getAge());
+        System.out.println("Nome: " + getNome());
+        System.out.println("Idade: " + getIdade());
         System.out.println("Email: " + getEmail());
         System.out.println("CPF: " + getCpf());
     }
@@ -53,20 +53,20 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public int getAge() {
-        return age;
+    public int getIdade() {
+        return idade;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 
     public String getEmail() {
@@ -95,6 +95,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Id: " + id + " | Nome: " + name + " | Idade: " + age + " | Email: " + email + " | CPF: " + cpf;
+        return "Id: " + id + " | Nome: " + nome + " | Idade: " + idade + " | Email: " + email + " | CPF: " + cpf;
     }
 }

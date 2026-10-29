@@ -20,7 +20,10 @@ public class UsuarioService {
 
     public boolean cadastrarUsuario(Usuario usuario) {
         if (usuarioRepository.findByCpf(usuario.getCpf()).isEmpty()) {
-            int numeroConta = (int) usuarioRepository.count() + 1;
+            int numeroConta = (int) contaRepository.count() + 1;
+            while (contaRepository.findByNumeroConta(numeroConta).isPresent()) {
+                numeroConta++;
+            }
             Conta novaConta = new Conta(numeroConta, usuario);
             usuario.setConta(novaConta);
 
@@ -39,8 +42,8 @@ public class UsuarioService {
         } else {
             for (Usuario u : lista) {
                 System.out.println("---------------");
-                System.out.println("Nome: " + u.getName());
-                System.out.println("Idade: " + u.getAge());
+                System.out.println("Nome: " + u.getNome());
+                System.out.println("Idade: " + u.getIdade());
                 System.out.println("Email: " + u.getEmail());
             }
         }

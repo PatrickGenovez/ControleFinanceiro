@@ -82,15 +82,28 @@ public class Menu {
 
         Usuario novoUsuario = new Usuario(nome, idade, email, cpf);
 
-        boolean cadastrado = usuarioService.cadastrarUsuario(novoUsuario);
+        try {
+            boolean cadastrado = usuarioService.cadastrarUsuario(novoUsuario);
 
-        if (cadastrado) {
-            System.out.println("-------------------------------");
-            System.out.println("Usuário cadastrado com sucesso!");
-            System.out.println("-------------------------------");
-        } else {
+            if (cadastrado) {
+                System.out.println("-------------------------------");
+                System.out.println("Usuário cadastrado com sucesso!");
+                System.out.println("-------------------------------");
+            } else {
+                System.out.println("-----------------------");
+                System.out.println("Usuário não cadastrado! (CPF já existente)");
+                System.out.println("-----------------------");
+            }
+        } catch (Exception e) {
             System.out.println("-----------------------");
-            System.out.println("Usuário não cadastrado! (CPF já existente)");
+            System.out.println("Falha ao salvar no banco de dados.");
+            // Mostra a causa principal simplificada
+            String causa = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+            if (causa != null && causa.contains("Duplicate")) {
+                System.out.println("Motivo: CPF ou Email já estão cadastrados!");
+            } else {
+                System.out.println("Detalhe técnico: " + causa);
+            }
             System.out.println("-----------------------");
         }
     }
@@ -120,7 +133,7 @@ public class Menu {
 
         do {
             System.out.println("\n=================================");
-            System.out.println("Bem-Vindo(a), " + usuarioLogado.getName() + "!");
+            System.out.println("Bem-Vindo(a), " + usuarioLogado.getNome() + "!");
             System.out.println("[ 1 ] - Verificar Saldo");
             System.out.println("[ 2 ] - Adicionar Receita");
             System.out.println("[ 3 ] - Adicionar Despesa");
